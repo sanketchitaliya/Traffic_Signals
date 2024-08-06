@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Signals</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="main-container-inner-text">
+            <input type="number" placeholder="Enter Second..." id="getSecondAll">
+            <input type="submit" onclick="calculation()" id="submit-1" value="submit">
+        </div>
+        <div class="main-container-inner-text">
+            <input type="number" placeholder="side-1 pr.." id="side1">
+            <input type="number" placeholder="side-2 pr.." id="side2">
+            <input type="number" placeholder="side-3 pr.." id="side3">
+            <input type="number" placeholder="side-4 pr.." id="side4">
+            <input type="submit" onclick="calculationSide()" id="submit-4" value="submit">
+        </div>
+        <div class="main-container-inner">
+            <div class="side-1 same" id="side-1">
+                <div class="light red"></div>
+                <div class="light yellow"></div>
+                <div class="light green"></div>
+            </div>
+            <div class="side-2 same" id="side-2">
+                <div class="light red"></div>
+                <div class="light yellow"></div>
+                <div class="light green"></div>
+            </div>
+            <div class="side-3 same" id="side-3">
+                <div class="light red"></div>
+                <div class="light yellow"></div>
+                <div class="light green"></div>
+            </div>
+            <div class="side-4 same" id="side-4">
+                <div class="light red"></div>
+                <div class="light yellow"></div>
+                <div class="light green"></div>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
