@@ -6,6 +6,7 @@ const side4 = document.getElementById("side4");
 const sides = document.querySelectorAll(".same");
 
 let firstNumber, secondNumber, thirdNumber, fourNumber;
+
 let totalSeconds;
 
 let secondShowArray = [];
@@ -29,6 +30,11 @@ sides.forEach((side, index) => {
 });
 
 function calculation() {
+  if (timeUpdate()) {
+    console.log("hello");
+    return;
+  }
+
   const lightColor = document.querySelectorAll(".yellow");
 
   lightColor.forEach((light) => {
@@ -36,6 +42,7 @@ function calculation() {
   });
 
   let num = parseInt(getSecondAll.value, 10);
+
   let totalPercent =
     parseInt(side1.value) +
     parseInt(side2.value) +
@@ -63,12 +70,15 @@ function calculation() {
   setTimeout(() => {
     leftSideSignal(firstNumber, leftSignal, "green");
   }, 0);
+
   setTimeout(() => {
     leftSideSignal(firstNumber, upSignal, "red");
   }, 0);
+
   setTimeout(() => {
     leftSideSignal(firstNumber + secondNumber, downSignal, "red");
   }, 0);
+
   setTimeout(() => {
     leftSideSignal(
       firstNumber + secondNumber + thirdNumber,
@@ -134,3 +144,29 @@ function leftSideSignal(second, leftSignal, colorSignal) {
     time--;
   }, 1000);
 }
+
+setInterval(() => {
+  timeUpdate();
+}, 1000);
+
+const timeUpdate = () => {
+  let currentTime = new Date();
+  let hour = currentTime.getHours().toString();
+  let minute = currentTime.getMinutes().toString();
+
+  storeData.forEach((ele) => {
+    if (ele.startTime.slice(0, 2) >= hour && ele.endTime.slice(0, 2) <= hour) {
+      console.log("iff");
+      return true;
+    } else {
+      console.log("else");
+      return false;
+    }
+  });
+};
+
+let storeData;
+
+fetch("./time.json")
+  .then((response) => response.json())
+  .then((json) => (storeData = json.time));
