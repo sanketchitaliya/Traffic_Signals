@@ -1,101 +1,111 @@
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 0;
-    margin: 0;
-    background-image: url('road-6175186_640.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+  background-image: url("road-6175186_640.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.main-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* % lights.length */
-.main-container-inner-text{
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
+.main-container-inner-text {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
 }
 
-.main-container-inner-text input[type="number"]{
-   width: 60px;
-   padding: 10px;
-   margin:0 10px;
-   border: 1px solid rgb(221, 221, 240);
-   border-radius: 5px;
-   color: green;
+.main-container-inner-text input[type="number"] {
+  width: 80px;
+  padding: 10px;
+  margin: 0 10px;
+  border: 1px solid rgb(221, 221, 240);
+  border-radius: 5px;
+  color: green;
 }
 
-.main-container-inner-text input[type="number"]::placeholder{
-    color: blue;
- }
-
- input[type="number"]:focus {
-    width: 150px;
-    outline: none;
-  }
-
-.main-container-inner-text input[type="submit"]{
-    width: 90px;
-    padding: 10px;
-    margin:0 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: rgb(68, 68, 233);
-    color: white;
- }
-
- input[type="submit"]:hover{
-    background-color: rgb(22, 22, 177);
-    cursor: pointer;
- }
-
-.main-container-inner{
-    display: flex;
-    justify-content: center;
-    gap: 40px;
+.main-container-inner-text input[type="number"]::placeholder {
+  color: blue;
 }
 
-.same{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 10px;
-    padding: 10px 30px;
-    background-color: black;
+input[type="number"]:focus {
+  width: 150px;
+  outline: none;
 }
 
-.red, .yellow, .green{
-    height: 100px;
-    width: 100px;
-    border-radius: 50%;
-    margin: 15px 0;
-    box-shadow: 10px 10px 10px #b7b7b7;
+.main-container-inner-text input[type="submit"] {
+  width: 90px;
+  padding: 10px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(68, 68, 233);
+  color: white;
 }
 
-.red{
-    background-color: red;
+input[type="submit"]:hover {
+  background-color: rgb(22, 22, 177);
+  cursor: pointer;
 }
 
-.yellow{
-    background-color: yellow;
+.main-container-inner {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
 }
 
-.green{
-    background-color: green;
+.same {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  padding: 10px 30px;
+  background-color: black;
 }
 
-.close{
-    background-color: #444;
+.same p {
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
 }
-.score{
-    height: 30px;
-    width: 30px;
-    border-radius: 8px;
-    background-color: white;
-    text-align: center;
-    vertical-align: middle;
+
+.red,
+.yellow,
+.green {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  margin: 15px 0;
+  box-shadow: 10px 10px 10px #b7b7b7;
+}
+
+.red {
+  background-color: red;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.green {
+  background-color: green;
+}
+
+.close {
+  background-color: #444;
+}
+.score {
+  height: 40px;
+  width: 40px;
+  border-radius: 8px;
+  background-color: white;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 24px;
+  font-weight: 700;
+  color: green;
 }

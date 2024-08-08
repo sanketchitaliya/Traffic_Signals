@@ -1,4 +1,4 @@
- getSecondAll = document.getElementById("getSecondAll");
+const getSecondAll = document.getElementById("getSecondAll");
 const side1 = document.getElementById("side1");
 const side2 = document.getElementById("side2");
 const side3 = document.getElementById("side3");
@@ -6,87 +6,131 @@ const side4 = document.getElementById("side4");
 const sides = document.querySelectorAll(".same");
 
 let firstNumber, secondNumber, thirdNumber, fourNumber;
-let totalSeconds, sideTimes, intervalId;
+let totalSeconds;
+
+let secondShowArray = [];
+
+sides.forEach((side, index) => {
+  const lightColor = side.querySelectorAll(".yellow");
+  const lightColorGreen = side.querySelectorAll(".green");
+  const lightColorRed = side.querySelectorAll(".red");
+
+  lightColor.forEach((light) => {
+    light.classList.add("yellow");
+  });
+
+  lightColorGreen.forEach((light) => {
+    light.classList.add("close");
+  });
+
+  lightColorRed.forEach((light) => {
+    light.classList.add("close");
+  });
+});
 
 function calculation() {
+  const lightColor = document.querySelectorAll(".yellow");
+
+  lightColor.forEach((light) => {
+    light.classList.add("close");
+  });
+
   let num = parseInt(getSecondAll.value, 10);
-  let divide = Math.floor(num / 4);
+  let totalPercent =
+    parseInt(side1.value) +
+    parseInt(side2.value) +
+    parseInt(side3.value) +
+    parseInt(side4.value);
 
-  // firstNumber = divide;
-  // secondNumber = divide;
-  // thirdNumber = divide;
-  // fourNumber = divide;
-
-  firstNumber = side1.value * num/100;
-  secondNumber = side2.value * num/100;
-  thirdNumber = side3.value * num/100;
-  fourNumber = side4.value * num/100;
-
-  totalSeconds = firstNumber * 4;
-  sideTimes = [firstNumber, firstNumber + secondNumber, firstNumber + secondNumber + thirdNumber, totalSeconds];
-
-  updateDisplay();
-  startTrafficLights();
-}
-
-
-
-function updateDisplay() {
-  const secondShowSide1 = document.querySelector("#side-1 .second-show-side1");
-  const secondShowSide2 = document.querySelector("#side-2 .second-show-side2");
-  const secondShowSide3 = document.querySelector("#side-3 .second-show-side3");
-  const secondShowSide4 = document.querySelector("#side-4 .second-show-side4");
-
-  secondShowSide1.textContent = firstNumber;
-  secondShowSide2.textContent = secondNumber;
-  secondShowSide3.textContent = thirdNumber;
-  secondShowSide4.textContent = fourNumber;
-                      
-}
-
-function startTrafficLights() {
-  let remainingTime = totalSeconds;
-  let count = 0; 
-
-  if (intervalId) {
-    clearInterval(intervalId);
+  if (totalPercent !== 100) {
+    alert("The total percentage must be 100.");
+    return;
   }
 
-  function updateLightsAndDisplay() {
-    if (remainingTime > 0) {
-      const timePerSide = Math.floor(totalSeconds / 4);
-      const sideStartTimes = [
-        0,
-        timePerSide,
-        timePerSide * 2,
-        timePerSide * 3
-      ];
+  firstNumber = Math.floor((side1.value * num) / 100);
+  secondNumber = Math.floor((side2.value * num) / 100);
+  thirdNumber = Math.floor((side3.value * num) / 100);
+  fourNumber = Math.floor((side4.value * num) / 100);
 
-      sides.forEach((side, index) => {
-        const lightColor = side.querySelectorAll(".light");
-        lightColor.forEach((light) => {
-          light.classList.add("close");
-        });
-        const currentTime = remainingTime - sideStartTimes[index];
-        const displayElement = side.querySelector(".score");
-        
-        if (currentTime > 0 && currentTime <= timePerSide) {
-          lightColor[2].classList.remove("close");
-          displayElement.textContent = currentTime;
-        } else {
-          lightColor[0].classList.remove("close");
-          displayElement.textContent = 0;
-        }
-      });
+  totalSeconds = firstNumber + secondNumber + thirdNumber + fourNumber;
 
-      remainingTime--;
+  document
+    .querySelectorAll(".score")
+    .forEach((ele) => secondShowArray.push(ele));
+
+  let [leftSignal, upSignal, downSignal, rightSignal] = secondShowArray;
+
+  setTimeout(() => {
+    leftSideSignal(firstNumber, leftSignal, "green");
+  }, 0);
+  setTimeout(() => {
+    leftSideSignal(firstNumber, upSignal, "red");
+  }, 0);
+  setTimeout(() => {
+    leftSideSignal(firstNumber + secondNumber, downSignal, "red");
+  }, 0);
+  setTimeout(() => {
+    leftSideSignal(
+      firstNumber + secondNumber + thirdNumber,
+      rightSignal,
+      "red"
+    );
+  }, 0);
+
+  setTimeout(() => {
+    leftSideSignal(secondNumber + thirdNumber + fourNumber, leftSignal, "red");
+  }, firstNumber * 1000 + 1000);
+
+  setTimeout(() => {
+    leftSideSignal(secondNumber, upSignal, "green");
+  }, firstNumber * 1000 + 1000);
+
+  setTimeout(() => {
+    leftSideSignal(firstNumber + thirdNumber + fourNumber, upSignal, "red");
+  }, (firstNumber + secondNumber) * 1000 + 1000);
+
+  setTimeout(() => {
+    leftSideSignal(thirdNumber, downSignal, "green");
+  }, (firstNumber + secondNumber) * 1000 + 1000);
+
+  setTimeout(() => {
+    leftSideSignal(firstNumber + secondNumber + fourNumber, downSignal, "red");
+  }, (firstNumber + secondNumber + thirdNumber) * 1000 + 1000);
+
+  setTimeout(() => {
+    leftSideSignal(fourNumber, rightSignal, "green");
+  }, (firstNumber + secondNumber + thirdNumber) * 1000 + 1000);
+
+  setTimeout(
+    () => calculation(),
+    (firstNumber + secondNumber + thirdNumber + fourNumber) * 1000 + 1000
+  );
+}
+
+function leftSideSignal(second, leftSignal, colorSignal) {
+  let signalIndex = secondShowArray.indexOf(leftSignal);
+  let signalRed = document.querySelectorAll(".red")[signalIndex];
+  let signalGreen = document.querySelectorAll(".green")[signalIndex];
+  let time = second;
+  let color = colorSignal;
+
+  setInterval(() => {
+    if (time < 0) return;
+
+    if (color == "green") {
+      signalGreen.classList.remove("close");
     } else {
-      remainingTime = totalSeconds; 
+      signalGreen.classList.add("close");
     }
-  }
 
-  intervalId = setInterval(updateLightsAndDisplay, 1000);
+    if (color == "red") {
+      signalRed.classList.remove("close");
+    } else {
+      signalRed.classList.add("close");
+    }
+
+    leftSignal.innerHTML = time;
+
+    time--;
+  }, 1000);
 }
-
-document.getElementById("submit-1").addEventListener("click", calculation);
-//document.getElementById("submit-4").addEventListener("click", calculationSide);
