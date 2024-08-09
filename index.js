@@ -32,8 +32,31 @@ sides.forEach((side, index) => {
   });
 });
 
+function closeSignal(){
+  console.log("hello");
+  
+  const lightColor = document.querySelectorAll(".yellow");
+  const lightColorGreen = document.querySelectorAll(".green");
+  const lightColorRed = document.querySelectorAll(".red");
+
+  lightColor.forEach((light) => {
+    light.classList.add("yellow");
+  });
+
+  lightColorGreen.forEach((light) => {
+    light.classList.add("close");
+  });
+
+  lightColorRed.forEach((light) => {
+    light.classList.add("close");
+  });
+}
+
 function calculation() {
   if(signalOver){
+    console.log("if");
+    
+    closeSignal();
     return;
   }
 
@@ -58,8 +81,8 @@ function calculation() {
 
   firstNumber = Math.floor((side1.value * num) / 100);
   secondNumber = Math.floor((side2.value * num) / 100);
-  thirdNumber = Math.floor((side3.value * num) / 100);
-  fourNumber = Math.floor((side4.value * num) / 100);
+  thirdNumber = Math.ceil((side3.value * num) / 100);
+  fourNumber = Math.ceil((side4.value * num) / 100);
 
   totalSeconds = firstNumber + secondNumber + thirdNumber + fourNumber;
 
@@ -91,31 +114,31 @@ function calculation() {
 
   setTimeout(() => {
     signalHandling(secondNumber + thirdNumber + fourNumber, leftSignal, "red");
-  }, firstNumber * 1000 + 1000);
+  }, firstNumber * 1000+1000);
 
   setTimeout(() => {
     signalHandling(secondNumber, upSignal, "green");
-  }, firstNumber * 1000 + 1000);
+  }, firstNumber * 1000+1000);
 
   setTimeout(() => {
     signalHandling(firstNumber + thirdNumber + fourNumber, upSignal, "red");
-  }, (firstNumber + secondNumber) * 1000 + 1000);
+  }, (firstNumber + secondNumber) * 1000+1000);
 
   setTimeout(() => {
     signalHandling(thirdNumber, downSignal, "green");
-  }, (firstNumber + secondNumber) * 1000 + 1000);
+  }, (firstNumber + secondNumber) * 1000+1000);
 
   setTimeout(() => {
     signalHandling(firstNumber + secondNumber + fourNumber, downSignal, "red");
-  }, (firstNumber + secondNumber + thirdNumber) * 1000 + 1000);
+  }, (firstNumber + secondNumber + thirdNumber) * 1000+1000);
 
   setTimeout(() => {
     signalHandling(fourNumber, rightSignal, "green");
-  }, (firstNumber + secondNumber + thirdNumber) * 1000 + 1000);
+  }, (firstNumber + secondNumber + thirdNumber) * 1000+1000);
 
   setTimeout(
     () => calculation(),
-    (firstNumber + secondNumber + thirdNumber + fourNumber) * 1000 + 1000
+    (firstNumber + secondNumber + thirdNumber + fourNumber) * 1000+1000
   );
 }
 
@@ -168,9 +191,9 @@ const timeUpdate = () => {
   storeData.forEach((ele) => {
 
     if (ele.startTime.toString() <= hourAndMinute && ele.endTime.toString() >= hourAndMinute) { 
-      signalOver = true; 
+      signalOver = false; 
     } else {
-      signalOver = false;
+      signalOver = true;
     }
 
   });
