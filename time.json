@@ -1,6 +1,5 @@
 {
-    "time":[
-      {"startTime":"17:00", "endTime":"18:00"},
-      {"startTime":"22:00", "endTime":"08:00"}
-    ]
+  "time":[
+    {"startTime":"11:42", "endTime":"11:46"}
+  ]
 }

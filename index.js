@@ -4,10 +4,13 @@ const side2 = document.getElementById("side2");
 const side3 = document.getElementById("side3");
 const side4 = document.getElementById("side4");
 const sides = document.querySelectorAll(".same");
+let resetGameId = document.getElementById("resetButton");
 
 let firstNumber, secondNumber, thirdNumber, fourNumber;
 
 let totalSeconds;
+
+let signalOver;
 
 let secondShowArray = [];
 
@@ -30,8 +33,7 @@ sides.forEach((side, index) => {
 });
 
 function calculation() {
-  if (timeUpdate()) {
-    console.log("hello");
+  if(signalOver){
     return;
   }
 
@@ -68,19 +70,19 @@ function calculation() {
   let [leftSignal, upSignal, downSignal, rightSignal] = secondShowArray;
 
   setTimeout(() => {
-    leftSideSignal(firstNumber, leftSignal, "green");
+    signalHandling(firstNumber, leftSignal, "green");
   }, 0);
 
   setTimeout(() => {
-    leftSideSignal(firstNumber, upSignal, "red");
+    signalHandling(firstNumber, upSignal, "red");
   }, 0);
 
   setTimeout(() => {
-    leftSideSignal(firstNumber + secondNumber, downSignal, "red");
+    signalHandling(firstNumber + secondNumber, downSignal, "red");
   }, 0);
 
   setTimeout(() => {
-    leftSideSignal(
+    signalHandling(
       firstNumber + secondNumber + thirdNumber,
       rightSignal,
       "red"
@@ -88,27 +90,27 @@ function calculation() {
   }, 0);
 
   setTimeout(() => {
-    leftSideSignal(secondNumber + thirdNumber + fourNumber, leftSignal, "red");
+    signalHandling(secondNumber + thirdNumber + fourNumber, leftSignal, "red");
   }, firstNumber * 1000 + 1000);
 
   setTimeout(() => {
-    leftSideSignal(secondNumber, upSignal, "green");
+    signalHandling(secondNumber, upSignal, "green");
   }, firstNumber * 1000 + 1000);
 
   setTimeout(() => {
-    leftSideSignal(firstNumber + thirdNumber + fourNumber, upSignal, "red");
+    signalHandling(firstNumber + thirdNumber + fourNumber, upSignal, "red");
   }, (firstNumber + secondNumber) * 1000 + 1000);
 
   setTimeout(() => {
-    leftSideSignal(thirdNumber, downSignal, "green");
+    signalHandling(thirdNumber, downSignal, "green");
   }, (firstNumber + secondNumber) * 1000 + 1000);
 
   setTimeout(() => {
-    leftSideSignal(firstNumber + secondNumber + fourNumber, downSignal, "red");
+    signalHandling(firstNumber + secondNumber + fourNumber, downSignal, "red");
   }, (firstNumber + secondNumber + thirdNumber) * 1000 + 1000);
 
   setTimeout(() => {
-    leftSideSignal(fourNumber, rightSignal, "green");
+    signalHandling(fourNumber, rightSignal, "green");
   }, (firstNumber + secondNumber + thirdNumber) * 1000 + 1000);
 
   setTimeout(
@@ -117,7 +119,7 @@ function calculation() {
   );
 }
 
-function leftSideSignal(second, leftSignal, colorSignal) {
+function signalHandling(second, leftSignal, colorSignal) {
   let signalIndex = secondShowArray.indexOf(leftSignal);
   let signalRed = document.querySelectorAll(".red")[signalIndex];
   let signalGreen = document.querySelectorAll(".green")[signalIndex];
@@ -145,6 +147,11 @@ function leftSideSignal(second, leftSignal, colorSignal) {
   }, 1000);
 }
 
+function resetGame() {
+  location.reload();
+}
+
+
 setInterval(() => {
   timeUpdate();
 }, 1000);
@@ -153,15 +160,19 @@ const timeUpdate = () => {
   let currentTime = new Date();
   let hour = currentTime.getHours().toString();
   let minute = currentTime.getMinutes().toString();
+  let second = currentTime.getSeconds().toString();
+  let hourAndMinute = hour.concat(":",minute).toString();
+
+  document.querySelector('#dateTime').innerHTML = `${hour.padStart(2,"0")}:${minute.padStart(2,"0")}:${second.padStart(2,"0")}`;
 
   storeData.forEach((ele) => {
-    if (ele.startTime.slice(0, 2) >= hour && ele.endTime.slice(0, 2) <= hour) {
-      console.log("iff");
-      return true;
+
+    if (ele.startTime.toString() <= hourAndMinute && ele.endTime.toString() >= hourAndMinute) { 
+      signalOver = true; 
     } else {
-      console.log("else");
-      return false;
+      signalOver = false;
     }
+
   });
 };
 
@@ -170,3 +181,5 @@ let storeData;
 fetch("./time.json")
   .then((response) => response.json())
   .then((json) => (storeData = json.time));
+
+  resetGameId.addEventListener("click", resetGame);
